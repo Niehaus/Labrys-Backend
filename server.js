@@ -42,10 +42,10 @@ app.get('/denuncias', (req, resp) => {
 app.post('/denuncias', (req, resp) => {
     console.log('Chamou -> /entregador/:id')
     let den = req.body;
-    sql = "INSERT INTO denuncias VALUES ('" + den.iddenuncia + "','" + den.nome_local + "','" + den.tipo_violencia + "','" + den.depoimento + "','" + den.latitude + "','" + den.longitude + "')";
+    sql = "INSERT INTO denuncias VALUES ('"+den.iddenuncia+"','"+ den.nome_local+"','"+den.tipo_violencia+"','"+den.depoimento+"','"+den.latitude+"','"+den.longitude+"')";
      connection.query(sql, [den.iddenuncia, den.nome_local, den.tipo_violencia, den.depoimento, den.latitude, den.longitude],(err, rows, fields) => {
          if (!err){
-            console.log('inseri?');
+            console.log('insert ' + rows);
             resp.send(rows);
          }
          else{
