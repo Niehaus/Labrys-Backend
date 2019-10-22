@@ -1,0 +1,9 @@
+adicionar tabela de login do adm
+
+adicionar tabela de comentarios
+
+especializar o campo tipo_ajuda nas possiveis funções pré-cadastradas:
+psicologo, assitente social, casa de apoio 
+
+
+especializar o campo de rede social nas possíveis redes sociais 
