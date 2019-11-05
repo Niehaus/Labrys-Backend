@@ -13,11 +13,15 @@ const connection = mysql.createConnection({
 const denuncia_module = require('./labrys-modules/denuncia.js');
 const cadastro_module = require('./labrys-modules/cadastro.js');
 const depoimento_module = require('./labrys-modules/depoimento.js');
+const comentario_module = require('./labrys-modules/comentario.js');
+const login_module = require('./labrys-modules/login.js');
 
 app.use(express.json());
 app.use(denuncia_module(connection));
 app.use(cadastro_module(connection));
 app.use(depoimento_module(connection));
+app.use(comentario_module(connection));
+app.use(login_module(connection));
 
 app.listen('3000', () => {
     connection.connect((err) => {

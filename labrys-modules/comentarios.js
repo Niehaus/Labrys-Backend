@@ -3,10 +3,10 @@ const express = require('express');
 module.exports = (connection) => {
     const router = express.Router();
 
-    //cadastro dos voluntários
-    router.get('/cadastro/:id', (req, resp) => {
-        let id_cadastro = req.params.id;
-        connection.query("SELECT nome,telefone,tipo_da_ajuda,descr_funcionamento,twitter_user,fb_link,wpp_num FROM cadastro_voluntarios,tipo_ajuda, rede_social WHERE idcadastro_voluntario = ? and tipo_ajuda = idtipo_ajuda and rede_social = idrede_social",
+    //comentarios
+    router.get('/comentario/:id', (req, resp) => {
+        let id_comentario = req.params.id;
+        connection.query("SELECT * FROM comentarios WHERE idcomentarios = ?",
             [id_cadastro],
             (err, result) => {
                 if (err) {
@@ -19,14 +19,13 @@ module.exports = (connection) => {
             });
     });
 
-    router.post('/cadastro', (req, resp) => {
-        let cadastro = req.body;
-       
-        if (cadastro == null) {
+    router.post('/comentario', (req, resp) => {
+        let comentario = req.body;
+        if (comentario == null) {
             resp.status(204).end();
         } else {
-            connection.query("INSERT INTO cadastro_voluntarios SET ?",
-                [cadastro],
+            connection.query("INSERT INTO comentarios SET ?",
+                [comentario],
                 (err, result) => {
                     if (err) {
                         console.log(err);
@@ -39,12 +38,12 @@ module.exports = (connection) => {
         }
     });
 
-    router.put('/cadastro/:id', (req, resp) => {
-        let id_cadastro = req.params.id;
-        let cadastro = req.body;
+    router.put('/comentario/:id', (req, resp) => {
+        let id_comentario = req.params.id;
+        let comentario = req.body;
         cadastro.idcadastro_voluntario = id_cadastro;
-        connection.query('UPDATE cadastro_voluntarios SET ? WHERE idcadastro_voluntario = ?',
-            [cadastro, id_cadastro],
+        connection.query('UPDATE comentarios SET ? WHERE idcomentarios = ?',
+            [comentario, id_comentario],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -55,10 +54,10 @@ module.exports = (connection) => {
             });
     });
 
-    router.delete('/cadastro/:id', (req, resp) => {
-        let id_cadastro = req.params.id;
-        connection.query('DELETE FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?',
-            [id_cadastro],
+    router.delete('/comentario/:id', (req, resp) => {
+        let id_comentario = req.params.id;
+        connection.query('DELETE FROM comentarios WHERE idcomentario = ?',
+            [id_comentario],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -68,6 +67,7 @@ module.exports = (connection) => {
                 }
             });
     });
+
 
     return router;
 }
