@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
 const denuncia_module = require('./labrys-modules/denuncia.js');
 const cadastro_module = require('./labrys-modules/cadastro.js');
 const depoimento_module = require('./labrys-modules/depoimento.js');
-const comentario_module = require('./labrys-modules/comentario.js');
+const comentario_module = require('./labrys-modules/comentarios.js');
 const login_module = require('./labrys-modules/login.js');
 
 app.use(express.json());
