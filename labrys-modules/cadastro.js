@@ -24,85 +24,101 @@ module.exports = (connection) => {
         let ajuda = req.body.Ajuda;
         let rede_social = req.body.RedeSocial;
         var idtipo_ajuda = 0, idrede_social = 0;
-        console.log(req.body);
-        console.log(req.body.User);
 
         if (cadastro == null) {
             resp.status(204).end();
         } else {   
             connection.query("INSERT INTO tipo_ajuda SET ?",
-                [ajuda],
-                (err, result) => {
-                    if (err) {
-                        console.log(err);
-                        resp.status(500).end();
-                    } else {
-                        console.log(result.insertId);
-                        idtipo_ajuda = result.insertId;
-                        cadastro.tipo_ajuda = idtipo_ajuda;
-                        console.log(cadastro);
-                        connection.query("INSERT INTO rede_social SET ?",
-                            [rede_social],
-                            (err, result) => {
-                                if (err) {
-                                    console.log(err);
-                                    resp.status(500).end();
-                                } else {
-                                    console.log(result.insertId);
-                                    idrede_social = result.insertId;
-                                    cadastro.rede_social = idrede_social;
-                                    console.log(cadastro);
-                                    connection.query("INSERT INTO cadastro_voluntarios SET ?",
-                                        [cadastro],
-                                        (err, result) => {
-                                            if (err) {
-                                                console.log(err);
-                                                resp.status(500).end();
-                                            } else {
-                                                console.log(result.insertId);
-                                                console.log(cadastro);
-                                                
-                                                resp.status(200);
-                                            }
-                                        });
-                                    
-                                    resp.status(200);
-                                }
-                            });
-                        resp.json(result);
-                        resp.status(200);
-                    }
-                });
-            
+            [ajuda],
+            (err, result) => {
+                if (err) {
+                    console.log(err);
+                    resp.status(500).end();
+                }else {
+                    idtipo_ajuda = result.insertId;
+                    cadastro.tipo_ajuda = idtipo_ajuda;
+                    connection.query("INSERT INTO rede_social SET ?",
+                        [rede_social],
+                        (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                resp.status(500).end();
+                            }else {
+                                console.log(result.insertId);
+                                idrede_social = result.insertId;
+                                cadastro.rede_social = idrede_social;
+                                console.log(cadastro);
+                                connection.query("INSERT INTO cadastro_voluntarios SET ?",
+                                    [cadastro],
+                                    (err, result) => {
+                                        if (err) {
+                                            console.log(err);
+                                            resp.status(500).end();
+                                        } else { 
+                                            resp.status(200);
+                                        }
+                                    });
+                                
+                                resp.status(200);
+                            }
+                        });
+                resp.json(result);
+                resp.status(200);
+                }
+            });
         }
     });
 
     router.put('/cadastro/:id', (req, resp) => {
         let id_cadastro = req.params.id;
-        let cadastro = req.body;
+        let cadastro = req.body.User;
+        let ajuda = req.body.Ajuda;
+        let rede_social = req.body.RedeSocial;
+    
+        connection.query('UPDATE tipo_ajuda SET ? WHERE idtipo_ajuda = (SELECT tipo_ajuda FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?)',
+        [ajuda, id_cadastro],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                resp.status(500).end();
+            } else {
+                    connection.query('UPDATE rede_social SET ? WHERE idrede_social = (SELECT rede_social FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?)',
+                        [rede_social, id_cadastro],
+                        (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                resp.status(500).end();
+                            } else {
+                            connection.query('UPDATE cadastro_voluntarios SET ? WHERE idcadastro_voluntario = ?',
+                                [cadastro, id_cadastro],
+                                (err, result) => {
+                                    if (err) {
+                                        console.log(err);
+                                        resp.status(500).end();
+                                    } else {
 
-        cadastro.idcadastro_voluntario = id_cadastro;
-        connection.query('UPDATE cadastro_voluntarios SET ? WHERE idcadastro_voluntario = ?',
-            [cadastro, id_cadastro],
-            (err, result) => {
-                if (err) {
-                    console.log(err);
-                    resp.status(500).end();
-                } else {
-                    resp.status(200).end();
-                }
-            });
+                                        resp.status(200);
+                                    }
+                                });
+                                resp.status(200);
+                            }
+                        });
+                resp.json(result);
+                resp.status(200);
+            }
+        });
     });
 
     router.delete('/cadastro/:id', (req, resp) => {
         let id_cadastro = req.params.id;
-        connection.query('DELETE FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?',
-            [id_cadastro],
+        connection.query('DELETE rede_social, tipo_ajuda FROM rede_social INNER JOIN tipo_ajuda WHERE idrede_social = (SELECT rede_social FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?) and idtipo_ajuda = (SELECT tipo_ajuda FROM cadastro_voluntarios WHERE idcadastro_voluntario = ?)',
+            [id_cadastro,id_cadastro],
             (err, result) => {
                 if (err) {
                     console.log(err);
                     resp.status(500).end();
                 } else {
+
                     resp.status(200).end();
                 }
             });

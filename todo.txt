@@ -7,3 +7,20 @@ psicologo, assitente social, casa de apoio
 
 
 especializar o campo de rede social nas possíveis redes sociais 
+
+
+{
+    "User": {
+        "nome": "barbara",
+        "telefone": "3333"
+    },
+    "Ajuda":    {
+        "tipo_da_ajuda": "psico2232",
+        "descr_funcionamento": "blablabla"
+    },
+    "RedeSocial": {
+        "twitter_user": "yayboechat",
+        "fb_link": "bb",
+        "wpp_num": "33"
+    }
+}
