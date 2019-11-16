@@ -10,6 +10,9 @@ const connection = mysql.createConnection({
     multipleStatments: true
 });
 
+var cors = require('cors');
+app.use(cors());
+
 const denuncia_module = require('./labrys-modules/denuncia.js');
 const cadastro_module = require('./labrys-modules/cadastro.js');
 const depoimento_module = require('./labrys-modules/depoimento.js');
@@ -30,4 +33,16 @@ app.listen('3000', () => {
     })
 });
 
+   app.get('/cadastro', (req, resp) => {
+       connection.query("SELECT * FROM cadastro_voluntarios",
+           (err, result) => {
+               if (err) {
+                   console.log(err);
+                   resp.status(500).end();
+               } else {
+                   resp.status(200);
+                   resp.json(result);
+               }
+           });
+   });
 
