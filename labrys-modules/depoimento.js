@@ -19,6 +19,19 @@ module.exports = (connection) => {
              });
      });
 
+       router.get('/depoimento', (req, resp) => {
+           connection.query("SELECT * FROM depoimentos",
+               (err, result) => {
+                   if (err) {
+                       console.log(err);
+                       resp.status(500).end();
+                   } else {
+                       resp.json(result);
+                       resp.status(200);
+                   }
+               });
+       });
+
      router.post('/depoimento', (req, resp) => {
          let depoimento = req.body;
          if (depoimento == null) {
