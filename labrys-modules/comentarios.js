@@ -5,9 +5,9 @@ module.exports = (connection) => {
 
     //comentarios
     router.get('/comentario/:id', (req, resp) => {
-        let id_comentario = req.params.id;
-        connection.query("SELECT * FROM comentarios WHERE idcomentarios = ?",
-            [id_cadastro],
+        let iddepoimento = req.params.id;
+        connection.query("select * from comentarios where depoimento_associado = ? ",
+        [iddepoimento],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -19,7 +19,7 @@ module.exports = (connection) => {
             });
     });
 
-    router.post('/comentario', (req, resp) => {
+    router.post('/comentario/', (req, resp) => {
         let comentario = req.body;
         if (comentario == null) {
             resp.status(204).end();

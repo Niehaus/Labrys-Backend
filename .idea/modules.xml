@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../labrysFront/.idea/labrysFront.iml" filepath="$PROJECT_DIR$/../labrysFront/.idea/labrysFront.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/labrysTecWeb.iml" filepath="$PROJECT_DIR$/.idea/labrysTecWeb.iml" />
+    </modules>
+  </component>
+</project>
