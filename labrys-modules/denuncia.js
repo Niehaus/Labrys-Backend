@@ -3,6 +3,18 @@ const express = require('express');
 module.exports = (connection) => {
     const router = express.Router();
 
+    router.get('/denuncias', (req, resp) => {
+        connection.query("SELECT * FROM denuncias",
+            (err, result) => {
+                if (err) {
+                    console.log(err);
+                    resp.status(500).end();
+                } else {
+                    resp.json(result);
+                    resp.status(200);
+                }
+            });
+    });
     //parte das denuncias
     router.get('/denuncias/:id', (req, resp) => {
         let id_denuncia = req.params.id;
