@@ -43,3 +43,11 @@ UPDATE tipo_ajuda SET tipo_da_ajuda = "ajudar", descr_funcionamento = "ajudar co
 SET time_zone = 'Europe/Helsinki';
 SET time_zone = "+00:00";
 SET @@session.time_zone = "+00:00";
+
+
+
+ALTER TABLE depoimentos AUTO_INCREMENT = 1;
+ALTER TABLE comentarios AUTO_INCREMENT = 1;
+
+
+
